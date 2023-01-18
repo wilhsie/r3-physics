@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Canvas, useFrame } from '@react-three/fiber';
-import { MeshDistortMaterial, MeshReflectorMaterial, OrbitControls } from '@react-three/drei';
+import { AdaptiveDpr, MeshDistortMaterial, MeshReflectorMaterial, OrbitControls } from '@react-three/drei';
 import { Physics, useBox, usePlane } from '@react-three/cannon';
+import { useKeyboardInput } from "./hooks/useKeyboardInput";
 import './App.css';
 
 function Cube(props) {
   const [ref, api] = useBox(() => ({ mass: 1, ...props }));
 
-  // onClick constant keeps track of cube state
-  const [active, setActive] = useState(false)
-  
+  const position = useRef([0, 0, 0])
+  useEffect(() => {
+    const unsubscribe = api.position.subscribe((v) => (position.current = v))
+    return unsubscribe
+  }, [])
+
+  // Input hook
+  const pressed = useKeyboardInput([" "]);
+
+  useFrame(() => {
+    if (JSON.stringify(pressed[" "]) === 'true') {
+      console.log("the spacebar is being pressed.");
+      api.applyImpulse([0, 1, 0], [0,0,0]);
+    }
+  });
+
   return (
     <mesh
       velocity={[100, 1, 1]}
@@ -45,7 +59,7 @@ function App() {
       <ambientLight intensity={0.3} />
       <pointLight position={[10,10,15]} />
       <Physics>
-        <Cube rotation={[-0.3, -7, 1.4]}/>
+        <Cube rotation={[-0.3, -7, 1.4]} position={[0, 2, 0]}/>
         <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}/>
       </Physics>
   
