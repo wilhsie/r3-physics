@@ -47,8 +47,8 @@ function Plane(props) {
   const [ref] = usePlane(() => ({ ...props }))
   return (
     <mesh ref={ref}>
-      <planeGeometry args={[10, 10]}/>
-      <MeshReflectorMaterial /> 
+      <planeGeometry args={[100, 100]}/>
+      <MeshReflectorMaterial color='purple' /> 
     </mesh>
   )
 }
