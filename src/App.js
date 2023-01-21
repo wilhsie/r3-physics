@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Canvas, useFrame } from '@react-three/fiber';
-import { AdaptiveDpr, MeshDistortMaterial, MeshReflectorMaterial, OrbitControls } from '@react-three/drei';
+import { MeshDistortMaterial, MeshReflectorMaterial, OrbitControls, Stars } from '@react-three/drei';
 import { Physics, useBox, usePlane } from '@react-three/cannon';
 import { useKeyboardInput } from "./hooks/useKeyboardInput";
 import './App.css';
@@ -47,7 +47,7 @@ function Plane(props) {
   const [ref] = usePlane(() => ({ ...props }))
   return (
     <mesh ref={ref}>
-      <planeGeometry args={[100, 100]}/>
+      <planeGeometry args={[10, 10]}/>
       <MeshReflectorMaterial color='purple' /> 
     </mesh>
   )
@@ -55,15 +55,16 @@ function Plane(props) {
 
 function App() {
   return (
-    <Canvas camera={{ position: [5, 5, 5]}}>
-      <ambientLight intensity={0.3} />
-      <pointLight position={[10,10,15]} />
+    <Canvas camera={{ position: [5, 5, 5]}} style={{background: "grey"}}>
+      <pointLight position={[0,10,0]} intensity={0.5}  />
       <Physics>
         <Cube rotation={[-0.3, -7, 1.4]} position={[0, 2, 0]}/>
         <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}/>
       </Physics>
-  
+
       <OrbitControls />
+
+      <Stars />
     </Canvas>
   )
 }
