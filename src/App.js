@@ -58,8 +58,8 @@ function App() {
     <Canvas camera={{ position: [5, 5, 5]}} style={{background: "grey"}}>
       <pointLight position={[0,10,0]} intensity={0.5}  />
       <Physics>
-        <Cube rotation={[-0.3, -7, 1.4]} position={[0, 2, 0]}/>
-        <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, -2, 0]}/>
+        <Cube rotation={[-0.3, -7, 1.4]} position={[0, 12, 0]}/>
+        <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}/>
       </Physics>
 
       <OrbitControls />
