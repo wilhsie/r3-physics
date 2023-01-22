@@ -1,2 +1,2 @@
-# H1 3D Fidget toy in React Three Fiber
+# H1 Experimenting with react three fiber + cannon
 Run with `npm start`
