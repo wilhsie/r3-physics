@@ -8,13 +8,6 @@ import './App.css';
 function Cube(props) {
   const [ref, api] = useBox(() => ({ mass: 1, ...props }));
 
-  const position = useRef([0, 0, 0])
-  useEffect(() => {
-    const unsubscribe = api.position.subscribe((v) => (position.current = v))
-    return unsubscribe
-  }, [])
-
-  // Input hook
   const pressed = useKeyboardInput([" "]);
 
   useFrame(() => {
@@ -31,8 +24,6 @@ function Cube(props) {
         const normal = event.face.normal.clone();
         normal.transformDirection(event.object.matrixWorld);
         normal.normalize();
-
-        console.log("normal to array: " + normal.toArray().map((x) => x * 10));
 
         api.applyImpulse(normal.toArray().map((x) => x * 5), event.point.toArray());
       }}
@@ -54,11 +45,15 @@ function Plane(props) {
 }
 
 function App() {
+  const pressed = useKeyboardInput([" "]);
+
   return (
     <Canvas camera={{ position: [5, 5, 5]}} style={{background: "grey"}}>
       <pointLight position={[0,10,0]} intensity={0.5}  />
       <Physics>
         <Cube rotation={[-0.3, -7, 1.4]} position={[0, 12, 0]}/>
+        <Cube rotation={[-0.3, -7, 1.4]} position={[0, 24, 0]}/>
+        <Cube rotation={[-0.3, -7, 1.4]} position={[0, 5, 0]}/>
         <Plane rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}/>
       </Physics>
 
